@@ -73,51 +73,80 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
 
-  // Improved Fetch with Retry and Better Error Handling
+  // Improved Fetch with Manana API (Faster and more reliable)
   const fetchLatestLotto = async () => {
     const winningNumbersContainer = document.getElementById('winning-numbers');
     
-    // Calculate current draw number
+    try {
+      // Fetch latest lotto result directly (CORS supported)
+      const response = await fetch('https://api.manana.kr/lotto/latest.json');
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const data = await response.json();
+      
+      if (data && data.draw) {
+        displayWinningNumbers(data, winningNumbersContainer);
+      } else {
+        throw new Error('Invalid data format');
+      }
+    } catch (error) {
+      console.error('Failed to fetch from primary API:', error);
+      // Fallback: Try manual calculation and proxy if primary fails
+      fetchFallbackLotto(winningNumbersContainer);
+    }
+  };
+
+  const fetchFallbackLotto = async (container) => {
     const startDate = new Date('2002-12-07T21:00:00+09:00');
     const today = new Date();
     const diff = today - startDate;
     const weekDiff = Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1;
-
+    
     try {
-      // Try current week, if not released, try previous week
-      let drawNo = weekDiff;
-      let data = await fetchFromProxy(drawNo);
+      const url = `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${weekDiff}`;
+      const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+      const json = await response.json();
+      const data = JSON.parse(json.contents);
       
-      if (!data || data.returnValue === 'fail') {
-        drawNo -= 1;
-        data = await fetchFromProxy(drawNo);
-      }
-
       if (data && data.returnValue === 'success') {
-        displayWinningNumbers(data, winningNumbersContainer);
+        displayWinningNumbersLegacy(data, container);
       } else {
-        throw new Error('API return fail');
+        container.innerHTML = `<div class="winning-placeholder">${translations[currentLang]['error']}</div>`;
       }
-    } catch (error) {
-      console.error('Failed to fetch:', error);
-      winningNumbersContainer.innerHTML = `<div class="winning-placeholder">${translations[currentLang]['error']}</div>`;
+    } catch (e) {
+      container.innerHTML = `<div class="winning-placeholder">${translations[currentLang]['error']}</div>`;
     }
-  };
-
-  const fetchFromProxy = async (drawNo) => {
-    const url = `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drawNo}`;
-    // Use a more reliable proxy or multiple fallback proxies
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}&timestamp=${Date.now()}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) return null;
-    const json = await response.json();
-    return JSON.parse(json.contents);
   };
 
   const displayWinningNumbers = (data, container) => {
     const drawNoSpan = document.getElementById('draw-no');
-    if (drawNoSpan) drawNoSpan.textContent = data.drwNo;
+    if (drawNoSpan) drawNoSpan.textContent = data.draw;
     
+    container.innerHTML = '';
+    // Manana API provides numbers in 'numbers' array: [1, 2, 3, 4, 5, 6, bonus]
+    const nums = data.numbers; 
+    
+    for (let i = 0; i < 6; i++) {
+      const ball = document.createElement('div');
+      ball.className = `win-ball color-${(i % 6) + 1}`;
+      ball.textContent = nums[i];
+      container.appendChild(ball);
+    }
+
+    const plus = document.createElement('span');
+    plus.className = 'bonus-label';
+    plus.textContent = '+';
+    container.appendChild(plus);
+
+    const bonusBall = document.createElement('div');
+    bonusBall.className = 'win-ball color-6';
+    bonusBall.textContent = nums[6]; // Last index is bonus
+    container.appendChild(bonusBall);
+  };
+
+  const displayWinningNumbersLegacy = (data, container) => {
+    const drawNoSpan = document.getElementById('draw-no');
+    if (drawNoSpan) drawNoSpan.textContent = data.drwNo;
     container.innerHTML = '';
     const numbers = [data.drwtNo1, data.drwtNo2, data.drwtNo3, data.drwtNo4, data.drwtNo5, data.drwtNo6];
     numbers.forEach((num, index) => {
@@ -126,12 +155,10 @@ document.addEventListener('DOMContentLoaded', () => {
       ball.textContent = num;
       container.appendChild(ball);
     });
-
     const plus = document.createElement('span');
     plus.className = 'bonus-label';
     plus.textContent = '+';
     container.appendChild(plus);
-
     const bonusBall = document.createElement('div');
     bonusBall.className = 'win-ball color-6';
     bonusBall.textContent = data.bnusNo;
