@@ -10,19 +10,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-    <span class="sun-icon">☀️</span>
-  </button>
+  <div class="controls">
+    <select id="lang-select" class="lang-select">
+      <option value="ko">KO</option>
+      <option value="en">EN</option>
+      <option value="ja">JA</option>
+    </select>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+      <span class="sun-icon">☀️</span>
+    </button>
+  </div>
   <div class="container">
     <header>
-      <h1>Lotto <span class="highlight">Generator</span></h1>
-      <p>Click the button to generate your 6 lucky numbers.</p>
+      <h1>Lotto <span class="highlight" data-i18n="title-highlight">Generator</span></h1>
+      <p data-i18n="subtitle">Click the button to generate your 6 lucky numbers.</p>
     </header>
 
     <section id="latest-result" class="latest-result">
-      <h3>Last Week's <span id="draw-no">---</span> Draw</h3>
+      <h3 data-i18n="last-draw-title">Last Week's <span id="draw-no">---</span> Draw</h3>
       <div id="winning-numbers" class="winning-numbers">
-        <div class="winning-placeholder">Loading latest numbers...</div>
+        <div class="winning-placeholder" data-i18n="loading">Loading latest numbers...</div>
       </div>
     </section>
 
@@ -37,7 +44,7 @@
         <div class="placeholder">--</div>
       </div>
 
-      <button id="generate-btn" class="generate-btn">
+      <button id="generate-btn" class="generate-btn" data-i18n="generate-btn">
         Generate Lucky Numbers
       </button>
     </main>
