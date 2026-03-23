@@ -1,6 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
   const lottoDisplay = document.getElementById('lotto-display');
   const generateBtn = document.getElementById('generate-btn');
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+
+  // Theme Toggle Logic
+  const currentTheme = localStorage.getItem('theme');
+  if (currentTheme === 'dark') {
+    body.classList.add('dark-mode');
+    themeToggle.innerHTML = '🌙';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    const isDark = body.classList.contains('dark-mode');
+    themeToggle.innerHTML = isDark ? '🌙' : '☀️';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
 
   const generateLottoNumbers = () => {
     const numbers = [];

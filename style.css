@@ -6,18 +6,31 @@
   --text-main: #1e293b;
   --text-muted: #64748b;
   --ball-shadow: rgba(0, 0, 0, 0.1);
+  --border-color: rgba(255, 255, 255, 0.8);
+  --dot-color: #e2e8f0;
+}
+
+body.dark-mode {
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --ball-shadow: rgba(0, 0, 0, 0.4);
+  --border-color: rgba(255, 255, 255, 0.05);
+  --dot-color: #1e293b;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: var(--bg-color);
-  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
   background-size: 20px 20px;
   color: var(--text-main);
   display: flex;
@@ -25,6 +38,25 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 1rem;
+  position: relative;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .container {
@@ -35,7 +67,7 @@ body {
   width: 100%;
   max-width: 600px;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border-color);
   backdrop-filter: blur(8px);
 }
 
