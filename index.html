@@ -3,12 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
+  <title>Lotto Number Generator</title>
   <link href='/style.css' rel='stylesheet'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
+  <div class="container">
+    <header>
+      <h1>Lotto <span class="highlight">Generator</span></h1>
+      <p>Click the button to generate your 6 lucky numbers.</p>
+    </header>
+
+    <main>
+      <div id="lotto-display" class="lotto-display">
+        <!-- Lotto balls will appear here -->
+        <div class="placeholder">--</div>
+        <div class="placeholder">--</div>
+        <div class="placeholder">--</div>
+        <div class="placeholder">--</div>
+        <div class="placeholder">--</div>
+        <div class="placeholder">--</div>
+      </div>
+
+      <button id="generate-btn" class="generate-btn">
+        Generate Lucky Numbers
+      </button>
+    </main>
+
+    <footer>
+      <p>© 2026 Musical Octo Adventure</p>
+    </footer>
+  </div>
   <script defer type="text/javascript" src="/main.js"></script>
 </body>
 </html>
