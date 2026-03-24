@@ -31,10 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'subtitle': 'ボタンをクリックして6つのラッキーナンバーを生成하세요.',
       'recent-draws-title': '最近 5週間の当選番号',
       'draw-suffix': '回',
-      'loading': '最新の番号を読み込み中...',
+      'loading': '最新の番号を読み込み중...',
       'error': 'データの読み込み에 실패했습니다.',
       'generate-btn': 'ラッキーナンバー를 생성',
-      'footer': '© 2026 ミュージカル・オクト・アドベンチャー'
+      'footer': '© 2026 ミュージカル・오토・어드벤처'
     }
   };
 
@@ -75,31 +75,70 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
 
-  // Fetch Recent 5 Weeks
+  // Calculate Latest Draw Number
+  const getLatestDrawNo = () => {
+    const startDate = new Date('2002-12-07T21:00:00+09:00');
+    const today = new Date();
+    const diff = today - startDate;
+    const weekDiff = Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1;
+    
+    // Saturday 21:00 (Lotto draw time) check
+    const currentDay = today.getDay(); // 0 is Sunday, 6 is Saturday
+    const currentHour = today.getHours();
+    
+    // If it's Saturday before 9 PM, it should be previous week
+    if (currentDay === 6 && currentHour < 21) {
+      return weekDiff - 1;
+    }
+    return weekDiff;
+  };
+
+  // Fetch from Official API with Proxy (AllOrigins)
+  const fetchLottoByDrawNo = async (drawNo) => {
+    try {
+      const url = `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drawNo}`;
+      const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+      if (!response.ok) return null;
+      
+      const json = await response.json();
+      const data = JSON.parse(json.contents);
+      
+      if (data && data.returnValue === 'success') {
+        return {
+          draw: data.drwNo,
+          numbers: [
+            data.drwtNo1, data.drwtNo2, data.drwtNo3, 
+            data.drwtNo4, data.drwtNo5, data.drwtNo6,
+            data.bnusNo // Bonus number at the end
+          ]
+        };
+      }
+      return null;
+    } catch (e) {
+      console.error(`Failed to fetch draw ${drawNo}:`, e);
+      return null;
+    }
+  };
+
   const fetchRecentLotto = async () => {
     const listContainer = document.getElementById('winning-numbers-list');
+    const latestDraw = getLatestDrawNo();
     
     try {
-      // 1. Get latest draw number
-      const latestRes = await fetch('https://api.manana.kr/lotto/latest.json');
-      if (!latestRes.ok) throw new Error('Failed to fetch latest');
-      const latestData = await latestRes.json();
-      const latestDraw = latestData.draw;
-
-      // 2. Fetch last 5 draws in parallel
+      // Fetch last 5 draws in parallel
       const drawPromises = [];
       for (let i = 0; i < 5; i++) {
-        const drawNo = latestDraw - i;
-        drawPromises.push(fetch(`https://api.manana.kr/lotto/${drawNo}.json`).then(r => r.json()));
+        drawPromises.push(fetchLottoByDrawNo(latestDraw - i));
       }
 
       const results = await Promise.all(drawPromises);
+      const filteredResults = results.filter(res => res !== null);
       
       listContainer.innerHTML = '';
-      results.forEach(data => {
-        if (data && data[0]) {
-          renderWinningRow(data[0], listContainer);
-        }
+      if (filteredResults.length === 0) throw new Error('No data');
+
+      filteredResults.forEach(data => {
+        renderWinningRow(data, listContainer);
       });
     } catch (error) {
       console.error('Fetch error:', error);
@@ -119,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const ballsContainer = document.createElement('div');
     ballsContainer.className = 'winning-numbers';
 
-    // Numbers (assuming Manana API format)
     const nums = data.numbers;
     for (let i = 0; i < 6; i++) {
       const ball = document.createElement('div');
