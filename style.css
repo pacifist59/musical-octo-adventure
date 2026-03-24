@@ -98,24 +98,51 @@ header {
 .latest-result {
   background: var(--bg-color);
   border: 1px solid var(--border-color);
-  padding: 1.5rem;
+  padding: 1.5rem 1rem;
   border-radius: 1.5rem;
   margin-bottom: 2.5rem;
   transition: all 0.3s ease;
 }
 
 .latest-result h3 {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.25rem;
+  font-weight: 700;
+}
+
+.winning-numbers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.winning-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--card-bg);
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+}
+
+.draw-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 45px;
+  text-align: right;
+  margin-right: 0.25rem;
 }
 
 .winning-numbers {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.35rem;
   flex-wrap: wrap;
 }
 

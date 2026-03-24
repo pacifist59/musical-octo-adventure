@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ko: {
       'title-highlight': '생성기',
       'subtitle': '버튼을 눌러 6개의 행운 번호를 생성하세요.',
-      'last-draw-title': '지난주 <span id="draw-no">---</span>회 당첨 번호',
+      'recent-draws-title': '최근 5주 당첨 번호',
+      'draw-suffix': '회',
       'loading': '최신 번호를 불러오는 중...',
       'error': '데이터를 불러오지 못했습니다.',
       'generate-btn': '행운의 번호 생성',
@@ -18,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     en: {
       'title-highlight': 'Generator',
       'subtitle': 'Click the button to generate your 6 lucky numbers.',
-      'last-draw-title': "Last Week's <span id=\"draw-no\">---</span> Draw",
+      'recent-draws-title': 'Recent Winning Numbers',
+      'draw-suffix': '',
       'loading': 'Loading latest numbers...',
       'error': 'Failed to load data.',
       'generate-btn': 'Generate Lucky Numbers',
@@ -26,11 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     ja: {
       'title-highlight': '生成機',
-      'subtitle': 'ボタンをクリックして6つのラッキーナンバー를 생성하세요.',
-      'last-draw-title': '最新の当選番号 (<span id="draw-no">---</span>回)',
+      'subtitle': 'ボタンをクリックして6つのラッキーナンバーを生成하세요.',
+      'recent-draws-title': '最近 5週間の当選番号',
+      'draw-suffix': '回',
       'loading': '最新の番号を読み込み中...',
-      'error': 'データの読み込みに 실패했습니다.',
-      'generate-btn': 'ラッキーナンバーを生成',
+      'error': 'データの読み込み에 실패했습니다.',
+      'generate-btn': 'ラッキーナンバー를 생성',
       'footer': '© 2026 ミュージカル・オクト・アドベンチャー'
     }
   };
@@ -46,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         el.innerHTML = translations[lang][key];
       }
     });
-    // Footer is a special case
     document.querySelector('footer p').textContent = translations[lang]['footer'];
     currentLang = lang;
     localStorage.setItem('lang', lang);
@@ -56,10 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   langSelect.addEventListener('change', (e) => {
     updateLanguage(e.target.value);
-    fetchLatestLotto(); // Refresh draw number text in correct language
+    fetchRecentLotto(); 
   });
 
-  // Theme Toggle Logic
+  // Theme Toggle
   const currentTheme = localStorage.getItem('theme');
   if (currentTheme === 'dark') {
     body.classList.add('dark-mode');
@@ -73,99 +75,74 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
 
-  // Improved Fetch with Manana API (Faster and more reliable)
-  const fetchLatestLotto = async () => {
-    const winningNumbersContainer = document.getElementById('winning-numbers');
+  // Fetch Recent 5 Weeks
+  const fetchRecentLotto = async () => {
+    const listContainer = document.getElementById('winning-numbers-list');
     
     try {
-      // Fetch latest lotto result directly (CORS supported)
-      const response = await fetch('https://api.manana.kr/lotto/latest.json');
-      if (!response.ok) throw new Error('Network response was not ok');
-      
-      const data = await response.json();
-      
-      if (data && data.draw) {
-        displayWinningNumbers(data, winningNumbersContainer);
-      } else {
-        throw new Error('Invalid data format');
+      // 1. Get latest draw number
+      const latestRes = await fetch('https://api.manana.kr/lotto/latest.json');
+      if (!latestRes.ok) throw new Error('Failed to fetch latest');
+      const latestData = await latestRes.json();
+      const latestDraw = latestData.draw;
+
+      // 2. Fetch last 5 draws in parallel
+      const drawPromises = [];
+      for (let i = 0; i < 5; i++) {
+        const drawNo = latestDraw - i;
+        drawPromises.push(fetch(`https://api.manana.kr/lotto/${drawNo}.json`).then(r => r.json()));
       }
+
+      const results = await Promise.all(drawPromises);
+      
+      listContainer.innerHTML = '';
+      results.forEach(data => {
+        if (data && data[0]) {
+          renderWinningRow(data[0], listContainer);
+        }
+      });
     } catch (error) {
-      console.error('Failed to fetch from primary API:', error);
-      // Fallback: Try manual calculation and proxy if primary fails
-      fetchFallbackLotto(winningNumbersContainer);
+      console.error('Fetch error:', error);
+      listContainer.innerHTML = `<div class="winning-placeholder">${translations[currentLang]['error']}</div>`;
     }
   };
 
-  const fetchFallbackLotto = async (container) => {
-    const startDate = new Date('2002-12-07T21:00:00+09:00');
-    const today = new Date();
-    const diff = today - startDate;
-    const weekDiff = Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1;
-    
-    try {
-      const url = `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${weekDiff}`;
-      const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-      const json = await response.json();
-      const data = JSON.parse(json.contents);
-      
-      if (data && data.returnValue === 'success') {
-        displayWinningNumbersLegacy(data, container);
-      } else {
-        container.innerHTML = `<div class="winning-placeholder">${translations[currentLang]['error']}</div>`;
-      }
-    } catch (e) {
-      container.innerHTML = `<div class="winning-placeholder">${translations[currentLang]['error']}</div>`;
-    }
-  };
+  const renderWinningRow = (data, container) => {
+    const row = document.createElement('div');
+    row.className = 'winning-row';
 
-  const displayWinningNumbers = (data, container) => {
-    const drawNoSpan = document.getElementById('draw-no');
-    if (drawNoSpan) drawNoSpan.textContent = data.draw;
-    
-    container.innerHTML = '';
-    // Manana API provides numbers in 'numbers' array: [1, 2, 3, 4, 5, 6, bonus]
-    const nums = data.numbers; 
-    
+    const label = document.createElement('div');
+    label.className = 'draw-label';
+    label.textContent = `${data.draw}${translations[currentLang]['draw-suffix']}`;
+    row.appendChild(label);
+
+    const ballsContainer = document.createElement('div');
+    ballsContainer.className = 'winning-numbers';
+
+    // Numbers (assuming Manana API format)
+    const nums = data.numbers;
     for (let i = 0; i < 6; i++) {
       const ball = document.createElement('div');
       ball.className = `win-ball color-${(i % 6) + 1}`;
       ball.textContent = nums[i];
-      container.appendChild(ball);
+      ballsContainer.appendChild(ball);
     }
 
     const plus = document.createElement('span');
     plus.className = 'bonus-label';
     plus.textContent = '+';
-    container.appendChild(plus);
+    ballsContainer.appendChild(plus);
 
     const bonusBall = document.createElement('div');
     bonusBall.className = 'win-ball color-6';
-    bonusBall.textContent = nums[6]; // Last index is bonus
-    container.appendChild(bonusBall);
+    bonusBall.textContent = nums[6];
+    ballsContainer.appendChild(bonusBall);
+
+    row.appendChild(ballsContainer);
+    container.appendChild(row);
   };
 
-  const displayWinningNumbersLegacy = (data, container) => {
-    const drawNoSpan = document.getElementById('draw-no');
-    if (drawNoSpan) drawNoSpan.textContent = data.drwNo;
-    container.innerHTML = '';
-    const numbers = [data.drwtNo1, data.drwtNo2, data.drwtNo3, data.drwtNo4, data.drwtNo5, data.drwtNo6];
-    numbers.forEach((num, index) => {
-      const ball = document.createElement('div');
-      ball.className = `win-ball color-${(index % 6) + 1}`;
-      ball.textContent = num;
-      container.appendChild(ball);
-    });
-    const plus = document.createElement('span');
-    plus.className = 'bonus-label';
-    plus.textContent = '+';
-    container.appendChild(plus);
-    const bonusBall = document.createElement('div');
-    bonusBall.className = 'win-ball color-6';
-    bonusBall.textContent = data.bnusNo;
-    container.appendChild(bonusBall);
-  };
-
-  fetchLatestLotto();
+  fetchRecentLotto();
 
   // Lotto Generation Logic
   const generateLottoNumbers = () => {
