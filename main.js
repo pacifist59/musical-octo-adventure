@@ -1,14 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
   const brandSelect = document.getElementById('brand-select');
   const modelSelect = document.getElementById('model-select');
+  const sizeSelect = document.getElementById('size-select');
   const recommendationsContainer = document.getElementById('recommendations-container');
   const themeToggle = document.getElementById('theme-toggle');
   const body = document.body;
 
-  // Mock Vehicle & Tire Data
+  // Category Icons/Colors and Sample Images
+  const categoryMeta = {
+    allSeason: { label: 'All Season', color: '#10b981', img: 'https://images.unsplash.com/photo-1578844541663-4711efaf361a?auto=format&fit=crop&q=80&w=400' },
+    summer: { label: 'Summer', color: '#f59e0b', img: 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=400' },
+    allWeather: { label: 'All-Weather', color: '#3b82f6', img: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=400' },
+    winter: { label: 'Winter', color: '#6366f1', img: 'https://images.unsplash.com/photo-1486754735734-325b5831f3ad?auto=format&fit=crop&q=80&w=400' }
+  };
+
+  // Expanded Vehicle & Tire Data with Sizes
   const vehicleData = {
     'Hyundai': {
       models: ['Grandeur', 'Santa Fe', 'Avante', 'Ioniq 5'],
+      sizes: {
+        'Grandeur': ['225/55R17', '245/45R18', '245/40R19'],
+        'Santa Fe': ['235/60R18', '235/55R19', '255/45R20'],
+        'Avante': ['195/65R15', '205/55R16', '225/45R17'],
+        'Ioniq 5': ['235/55R19', '255/45R20']
+      },
       recommendations: {
         'Grandeur': {
           allSeason: { brand: 'Michelin', pattern: 'Primacy 4' },
@@ -38,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'Tesla': {
       models: ['Model 3', 'Model Y'],
+      sizes: {
+        'Model 3': ['235/45R18', '235/40R19', '235/35R20'],
+        'Model Y': ['255/45R19', '255/40R20', '255/35R21']
+      },
       recommendations: {
         'Model 3': {
           allSeason: { brand: 'Michelin', pattern: 'Pilot Sport All Season 4' },
@@ -55,6 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'BMW': {
       models: ['3 Series', '5 Series', 'X5'],
+      sizes: {
+        '3 Series': ['225/50R17', '225/45R18', '225/40R19'],
+        '5 Series': ['225/55R17', '245/45R18', '245/40R19', '245/35R20'],
+        'X5': ['255/55R18', '265/50R19', '275/45R20', '275/40R21']
+      },
       recommendations: {
         '3 Series': {
           allSeason: { brand: 'Bridgestone', pattern: 'Turanza QuietTrack' },
@@ -78,6 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'Mercedes-Benz': {
       models: ['E-Class', 'S-Class', 'GLE'],
+      sizes: {
+        'E-Class': ['225/55R17', '245/45R18', '245/40R19'],
+        'S-Class': ['255/45R18', '255/45R19', '255/40R20'],
+        'GLE': ['255/50R19', '275/50R20', '275/45R21']
+      },
       recommendations: {
         'E-Class': {
           allSeason: { brand: 'Michelin', pattern: 'Primacy Tour A/S' },
@@ -111,7 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
   brandSelect.addEventListener('change', (e) => {
     const selectedBrand = e.target.value;
     modelSelect.innerHTML = '<option value="" disabled selected>차종을 고르세요</option>';
+    sizeSelect.innerHTML = '<option value="" disabled selected>규격을 고르세요</option>';
     modelSelect.disabled = false;
+    sizeSelect.disabled = true;
 
     vehicleData[selectedBrand].models.forEach(model => {
       const option = document.createElement('option');
@@ -120,33 +151,47 @@ document.addEventListener('DOMContentLoaded', () => {
       modelSelect.appendChild(option);
     });
 
-    // Clear recommendations
-    recommendationsContainer.innerHTML = '<div class="empty-state"><p>차종을 선택하면 추천 타이어가 나타납니다.</p></div>';
+    recommendationsContainer.innerHTML = '<div class="empty-state"><p>차종과 규격을 선택하면 추천 타이어가 나타납니다.</p></div>';
   });
 
   // Model Change Event
   modelSelect.addEventListener('change', (e) => {
     const selectedBrand = brandSelect.value;
     const selectedModel = e.target.value;
+    
+    sizeSelect.innerHTML = '<option value="" disabled selected>규격을 고르세요</option>';
+    sizeSelect.disabled = false;
+
+    const sizes = vehicleData[selectedBrand].sizes[selectedModel] || [];
+    sizes.forEach(size => {
+      const option = document.createElement('option');
+      option.value = size;
+      option.textContent = size;
+      sizeSelect.appendChild(option);
+    });
+
+    recommendationsContainer.innerHTML = '<div class="empty-state"><p>타이어 규격을 선택해 주세요.</p></div>';
+  });
+
+  // Size Change Event
+  sizeSelect.addEventListener('change', (e) => {
+    const selectedBrand = brandSelect.value;
+    const selectedModel = modelSelect.value;
     const recs = vehicleData[selectedBrand].recommendations[selectedModel];
 
     if (recs) {
-      renderTireCards(recs);
+      renderTireCards(recs, e.target.value);
     }
   });
 
-  const renderTireCards = (recs) => {
+  const renderTireCards = (recs, size) => {
     recommendationsContainer.innerHTML = '';
     
-    const categories = [
-      { id: 'allSeason', label: 'All Season', color: '#10b981' },
-      { id: 'summer', label: 'Summer', color: '#f59e0b' },
-      { id: 'allWeather', label: 'All-Weather', color: '#3b82f6' },
-      { id: 'winter', label: 'Winter', color: '#6366f1' }
-    ];
+    const categories = ['allSeason', 'summer', 'allWeather', 'winter'];
 
-    categories.forEach((cat, index) => {
-      const tire = recs[cat.id];
+    categories.forEach((catId, index) => {
+      const tire = recs[catId];
+      const meta = categoryMeta[catId];
       if (!tire) return;
 
       const card = document.createElement('div');
@@ -154,9 +199,15 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.animationDelay = `${index * 0.1}s`;
 
       card.innerHTML = `
-        <span class="category-badge" style="background: ${cat.color}">${cat.label}</span>
-        <div class="tire-brand">${tire.brand}</div>
-        <div class="tire-pattern">${tire.pattern}</div>
+        <span class="category-badge" style="background: ${meta.color}">${meta.label}</span>
+        <div class="tire-image-wrapper">
+          <img src="${meta.img}" alt="${tire.pattern}" class="tire-image">
+        </div>
+        <div class="tire-info">
+          <div class="tire-brand">${tire.brand}</div>
+          <div class="tire-pattern">${tire.pattern}</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Size: ${size}</div>
+        </div>
       `;
       
       recommendationsContainer.appendChild(card);
