@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lotto Number Generator</title>
+  <title>Tire Finder - 내 차에 맞는 최적의 타이어 추천</title>
   <link href='/style.css' rel='stylesheet'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,46 +11,42 @@
 </head>
 <body>
   <div class="controls">
-    <select id="lang-select" class="lang-select">
-      <option value="ko">KO</option>
-      <option value="en">EN</option>
-      <option value="ja">JA</option>
-    </select>
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
       <span class="sun-icon">☀️</span>
     </button>
   </div>
   <div class="container">
     <header>
-      <h1>Lotto <span class="highlight" data-i18n="title-highlight">Generator</span></h1>
-      <p data-i18n="subtitle">Click the button to generate your 6 lucky numbers.</p>
+      <h1>Tire <span class="highlight">Finder</span></h1>
+      <p>내 차에 가장 잘 어울리는 타이어를 찾아보세요.</p>
     </header>
 
-    <section id="recent-results" class="latest-result">
-      <h3 data-i18n="recent-draws-title">Recent Winning Numbers</h3>
-      <div id="winning-numbers-list" class="winning-numbers-list">
-        <div class="winning-placeholder" data-i18n="loading">Loading latest numbers...</div>
+    <section class="selection-section">
+      <div class="select-group">
+        <label for="brand-select">제조사 선택</label>
+        <select id="brand-select" class="main-select">
+          <option value="" disabled selected>제조사를 고르세요</option>
+          <!-- Brands will be populated via JS -->
+        </select>
+      </div>
+
+      <div class="select-group">
+        <label for="model-select">차종 선택</label>
+        <select id="model-select" class="main-select" disabled>
+          <option value="" disabled selected>차종을 고르세요</option>
+          <!-- Models will be populated via JS -->
+        </select>
       </div>
     </section>
 
-    <main>
-      <div id="lotto-display" class="lotto-display">
-        <!-- Lotto balls will appear here -->
-        <div class="placeholder">--</div>
-        <div class="placeholder">--</div>
-        <div class="placeholder">--</div>
-        <div class="placeholder">--</div>
-        <div class="placeholder">--</div>
-        <div class="placeholder">--</div>
+    <main id="recommendations-container" class="recommendations-container">
+      <div class="empty-state">
+        <p>제조사와 차종을 선택하면 추천 타이어가 나타납니다.</p>
       </div>
-
-      <button id="generate-btn" class="generate-btn" data-i18n="generate-btn">
-        Generate Lucky Numbers
-      </button>
     </main>
 
     <footer>
-      <p>© 2026 Musical Octo Adventure</p>
+      <p>© 2026 Tire Finder - Premium Tire Recommendation</p>
     </footer>
   </div>
   <script defer type="text/javascript" src="/main.js"></script>
