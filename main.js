@@ -29,12 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
     ja: {
       'title-highlight': '生成機',
       'subtitle': 'ボタンをクリックして6つのラッキーナンバーを生成하세요.',
-      'recent-draws-title': '最近 5週間の当選番号',
+      'recent-draws-title': '最近 5週間の当選번호',
       'draw-suffix': '回',
-      'loading': '最新の番号を読み込み중...',
+      'loading': '最新の番号を読み込み中...',
       'error': 'データの読み込み에 실패했습니다.',
       'generate-btn': 'ラッキーナンバー를 생성',
-      'footer': '© 2026 ミュージカル・오토・어드벤처'
+      'footer': '© 2026 ミュージカル・옥토・어드벤처'
     }
   };
 
@@ -82,42 +82,58 @@ document.addEventListener('DOMContentLoaded', () => {
     const diff = today - startDate;
     const weekDiff = Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1;
     
-    // Saturday 21:00 (Lotto draw time) check
-    const currentDay = today.getDay(); // 0 is Sunday, 6 is Saturday
+    const currentDay = today.getDay(); 
     const currentHour = today.getHours();
+    const currentMinute = today.getMinutes();
     
-    // If it's Saturday before 9 PM, it should be previous week
-    if (currentDay === 6 && currentHour < 21) {
+    // Saturday 20:45 is roughly the draw result time
+    if (currentDay === 6 && (currentHour < 20 || (currentHour === 20 && currentMinute < 45))) {
       return weekDiff - 1;
     }
     return weekDiff;
   };
 
-  // Fetch from Official API with Proxy (AllOrigins)
-  const fetchLottoByDrawNo = async (drawNo) => {
-    try {
-      const url = `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drawNo}`;
-      const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-      if (!response.ok) return null;
-      
-      const json = await response.json();
-      const data = JSON.parse(json.contents);
-      
-      if (data && data.returnValue === 'success') {
-        return {
-          draw: data.drwNo,
-          numbers: [
-            data.drwtNo1, data.drwtNo2, data.drwtNo3, 
-            data.drwtNo4, data.drwtNo5, data.drwtNo6,
-            data.bnusNo // Bonus number at the end
-          ]
-        };
+  // Improved Fetch with Multiple Proxy Fallbacks
+  const fetchLottoWithFallback = async (drawNo) => {
+    const targetUrl = `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drawNo}`;
+    
+    // List of proxies to try
+    const proxies = [
+      (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+      (url) => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
+    ];
+
+    for (const proxyFn of proxies) {
+      try {
+        const proxyUrl = proxyFn(targetUrl);
+        const response = await fetch(proxyUrl);
+        if (!response.ok) continue;
+
+        const resData = await response.json();
+        
+        // Handle AllOrigins format (it wraps content in a 'contents' field)
+        let data;
+        if (resData.contents) {
+          data = JSON.parse(resData.contents);
+        } else {
+          data = resData;
+        }
+
+        if (data && data.returnValue === 'success') {
+          return {
+            draw: data.drwNo,
+            numbers: [
+              data.drwtNo1, data.drwtNo2, data.drwtNo3, 
+              data.drwtNo4, data.drwtNo5, data.drwtNo6,
+              data.bnusNo
+            ]
+          };
+        }
+      } catch (e) {
+        console.warn(`Proxy failed for draw ${drawNo}, trying next...`, e);
       }
-      return null;
-    } catch (e) {
-      console.error(`Failed to fetch draw ${drawNo}:`, e);
-      return null;
     }
+    return null;
   };
 
   const fetchRecentLotto = async () => {
@@ -125,23 +141,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const latestDraw = getLatestDrawNo();
     
     try {
-      // Fetch last 5 draws in parallel
+      listContainer.innerHTML = `<div class="winning-placeholder">${translations[currentLang]['loading']}</div>`;
+      
       const drawPromises = [];
       for (let i = 0; i < 5; i++) {
-        drawPromises.push(fetchLottoByDrawNo(latestDraw - i));
+        drawPromises.push(fetchLottoWithFallback(latestDraw - i));
       }
 
       const results = await Promise.all(drawPromises);
       const filteredResults = results.filter(res => res !== null);
       
       listContainer.innerHTML = '';
-      if (filteredResults.length === 0) throw new Error('No data');
+      if (filteredResults.length === 0) throw new Error('All proxies failed');
 
       filteredResults.forEach(data => {
         renderWinningRow(data, listContainer);
       });
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error('Final fetch error:', error);
       listContainer.innerHTML = `<div class="winning-placeholder">${translations[currentLang]['error']}</div>`;
     }
   };
