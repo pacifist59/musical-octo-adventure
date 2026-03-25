@@ -19,12 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     'Michelin Pilot Sport 5': 'https://dgaddcosprod.blob.core.windows.net/michelin-gcl/tyre-visuals/michelin-pilot-sport-5.png',
     'Michelin CrossClimate 2': 'https://vcdn.michelin.co.kr/product/crossclimate-2/tire-crossclimate-2-1.png',
     'Michelin Pilot Alpin 5': 'https://vcdn.michelin.co.kr/product/pilot-alpin-5/tire-pilot-alpin-5-1.png',
+    'Michelin Pilot Sport All Season 4': 'https://dgaddcosprod.blob.core.windows.net/michelin-na/tyre-visuals/michelin-pilot-sport-all-season-4-1.png',
     'Michelin Primacy All Season (EV)': 'https://vcdn.michelin.co.kr/product/primacy-all-season/tire-primacy-all-season-1.png',
     'Michelin Pilot Sport EV': 'https://vcdn.michelin.co.kr/product/pilot-sport-ev/tire-pilot-sport-ev-1.png',
     'Michelin Primacy SUV': 'https://vcdn.michelin.co.kr/product/primacy-suv/tire-primacy-suv-1.png',
     'Continental ProContact RX': 'https://www.continentaltire.com/sites/default/files/styles/product_image_large/public/product-images/ProContact_RX_Front.png',
     'Continental ExtremeContact DWS06 Plus': 'https://www.continentaltire.com/sites/default/files/styles/product_image_large/public/product-images/ExtremeContact_DWS06_Plus_Front.png',
     'Continental PremiumContact 6': 'https://www.continental-tires.com/content/dam/continental-tires/tires/passenger-cars/premiumcontact-6/premiumcontact-6-product-image.png',
+    'Continental MaxContact MC6': 'https://blobs.continental-tires.com/www8/servlet/blob/86364/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/maxcontact-mc6-product-image-data.png',
     'Hankook Kinergy EX': 'https://www.hankooktire.com/content/dam/hankooktire/global/tire/kinergy/ex-h308/kinergy-ex-h308-main.png',
     'Hankook Ventus S1 evo3': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/ventus-s1-evo3-k127/ventus-s1-evo3-k127-side.png',
     'Hankook Kinergy 4S2': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/kinergy-4s2-h750/kinergy-4s2-h750-side.png',
@@ -36,17 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'Bridgestone Turanza T005': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/turanza-t005/product-main.png',
     'Pirelli P Zero (PZ4)': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/p-zero/_/v1/image',
     'Default': 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=400'
-  };
-
-  const tireLinks = {
-    'Michelin Primacy 4': 'https://www.michelin.co.kr/auto/tyres/michelin-primacy-4',
-    'Michelin Pilot Sport 5': 'https://www.michelin.co.kr/auto/tyres/michelin-pilot-sport-5',
-    'Michelin CrossClimate 2': 'https://www.michelin.co.kr/auto/tyres/michelin-crossclimate-2',
-    'Michelin Pilot Alpin 5': 'https://www.michelin.co.kr/auto/tyres/michelin-pilot-alpin-5',
-    'Continental ProContact RX': 'https://www.continentaltire.com/products/procontact-rx',
-    'Hankook Kinergy 4S2': 'https://www.hankooktire.com/kr/ko/tire/kinergy/4s2-h750.html',
-    'Hankook Winter i*cept evo3': 'https://www.hankooktire.com/kr/ko/tire/winter-icept/evo3-w330.html',
-    'Kumho Majesty 9 SOLUS TA91': 'https://www.kumhotire.com/kr/ko/tire/view.do?productSeq=2533'
   };
 
   const vehicleData = {
@@ -62,6 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
           years: {
             '2024-2025 (MX5)': { sizes: ['235/60R18', '255/45R20', '255/40R21'], recs: { allSeason: { brand: 'Continental', pattern: 'CrossContact RX' }, summer: { brand: 'Michelin', pattern: 'Latitude Sport 3' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' } } },
             '2018-2023 (TM)': { sizes: ['235/60R18', '235/55R19', '255/45R20'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy SUV' }, summer: { brand: 'Continental', pattern: 'PremiumContact 6' }, allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' }, winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' } } }
+          }
+        }
+      }
+    },
+    'Kia': {
+      models: {
+        'Sorento': {
+          years: {
+            '2020-2025 (MQ4)': { sizes: ['235/60R18', '235/55R19', '255/45R20'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy SUV' }, summer: { brand: 'Continental', pattern: 'PremiumContact 6' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' } } }
+          }
+        },
+        'K5': {
+          years: {
+            '2019-2025 (DL3)': { sizes: ['215/55R17', '235/45R18', '245/40R19'], recs: { allSeason: { brand: 'Kumho', pattern: 'Majesty 9 SOLUS TA91' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Hankook', pattern: 'Winter i*cept evo3' } } }
           }
         }
       }
@@ -85,8 +90,18 @@ document.addEventListener('DOMContentLoaded', () => {
       models: {
         '5 Series': {
           years: {
-            '2024-2025 (G60)': { sizes: ['245/45R19', '245/40R20', '245/35R21'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } },
-            '2017-2023 (G30)': { sizes: ['225/55R17', '245/45R18', '245/40R19'], recs: { allSeason: { brand: 'Pirelli', pattern: 'Cinturato P7 All Season' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Continental', pattern: 'AllSeasonContact' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } }
+            '2024-2025 (G60)': { sizes: ['245/45R19', '245/40R20'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } },
+            '2017-2023 (G30)': { sizes: ['225/55R17', '245/45R18'], recs: { allSeason: { brand: 'Pirelli', pattern: 'Cinturato P7 All Season' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Continental', pattern: 'AllSeasonContact' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } }
+          }
+        }
+      }
+    },
+    'Mercedes-Benz': {
+      models: {
+        'E-Class': {
+          years: {
+            '2024-2025 (W214)': { sizes: ['225/55R18', '245/45R19'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Continental', pattern: 'SportContact 7' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } },
+            '2016-2023 (W213)': { sizes: ['245/45R18', '245/40R19'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Continental', pattern: 'MaxContact MC6' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } }
           }
         }
       }
@@ -94,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const initBrands = () => {
+    brandSelect.innerHTML = '<option value="" disabled selected>제조사 선택</option>';
     Object.keys(vehicleData).forEach(brand => {
       const option = new Option(brand, brand);
       brandSelect.add(option);
@@ -149,12 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const renderTireCards = (recs, size) => {
     recommendationsContainer.innerHTML = '';
-    ['allSeason', 'summer', 'allWeather', 'winter'].forEach((catId, index) => {
+    ['allSeason', 'summer', 'allWeather', 'winter'].forEach(catId => {
       const tire = recs[catId];
+      if (!tire) return;
       const meta = categoryMeta[catId];
       const fullName = `${tire.brand} ${tire.pattern}`;
       const imgUrl = tireImages[fullName] || tireImages['Default'];
-      const productUrl = tireLinks[fullName] || `https://www.google.com/search?q=${encodeURIComponent(fullName)}+tire`;
+      const productUrl = `https://www.google.com/search?q=${encodeURIComponent(fullName)}+tire`;
 
       const card = document.createElement('div');
       card.className = 'tire-card';
@@ -163,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="tire-image-wrapper">
           <img src="${imgUrl}" alt="${fullName}" class="tire-image" onerror="this.src='${tireImages['Default']}'">
         </div>
-        <div class="tire-info" style="margin-bottom: 1rem;">
+        <div class="tire-info">
           <div class="tire-brand">${tire.brand}</div>
           <div class="tire-pattern">${tire.pattern}</div>
           <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem;">Size: ${size}</div>
@@ -185,4 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTheme(isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
+
+  // CRITICAL: Call initBrands to populate the first dropdown
+  initBrands();
 });
