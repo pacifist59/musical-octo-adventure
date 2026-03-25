@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
     'Michelin Primacy All Season (EV)': 'https://vcdn.michelin.co.kr/product/primacy-all-season/tire-primacy-all-season-1.png',
     'Michelin Pilot Sport EV': 'https://vcdn.michelin.co.kr/product/pilot-sport-ev/tire-pilot-sport-ev-1.png',
     'Michelin Primacy SUV': 'https://vcdn.michelin.co.kr/product/primacy-suv/tire-primacy-suv-1.png',
+    'Michelin Latitude Sport 3': 'https://vcdn.michelin.co.kr/product/latitude-sport-3/tire-latitude-sport-3-1.png',
     'Continental ProContact RX': 'https://www.continentaltire.com/sites/default/files/styles/product_image_large/public/product-images/ProContact_RX_Front.png',
+    'Continental CrossContact RX': 'https://www.continentaltire.com/sites/default/files/styles/product_image_large/public/product-images/CrossContact_RX_Front.png',
     'Continental ExtremeContact DWS06 Plus': 'https://www.continentaltire.com/sites/default/files/styles/product_image_large/public/product-images/ExtremeContact_DWS06_Plus_Front.png',
     'Continental PremiumContact 6': 'https://www.continental-tires.com/content/dam/continental-tires/tires/passenger-cars/premiumcontact-6/premiumcontact-6-product-image.png',
     'Continental MaxContact MC6': 'https://blobs.continental-tires.com/www8/servlet/blob/86364/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/maxcontact-mc6-product-image-data.png',
@@ -36,11 +38,40 @@ document.addEventListener('DOMContentLoaded', () => {
     'Kumho Majesty 9 SOLUS TA91': 'https://www.kumhotire.com/upload/product/201905/TA91_list.png',
     'Bridgestone Alenza 001': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/alenza-001/product-main.png',
     'Bridgestone Turanza T005': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/turanza-t005/product-main.png',
+    'Bridgestone Blizzak DM-V3': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/blizzak-dm-v3/product-main.png',
     'Pirelli P Zero (PZ4)': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/p-zero/_/v1/image',
     'Default': 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=400'
   };
 
   const vehicleData = {
+    'Toyota': {
+      models: {
+        'RAV4': {
+          years: {
+            '2019-2025 (XA50)': { sizes: ['225/65R17', '225/60R18', '235/55R19'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy SUV' }, summer: { brand: 'Continental', pattern: 'PremiumContact 6' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' } } }
+          }
+        },
+        'Camry': {
+          years: {
+            '2018-2025 (XV70)': { sizes: ['215/55R17', '235/45R18', '235/40R19'], recs: { allSeason: { brand: 'Bridgestone', pattern: 'Turanza T005' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Hankook', pattern: 'Winter i*cept evo3' } } }
+          }
+        }
+      }
+    },
+    'Volkswagen': {
+      models: {
+        'Tiguan': {
+          years: {
+            '2016-2025': { sizes: ['215/65R17', '235/55R18', '235/50R19'], recs: { allSeason: { brand: 'Continental', pattern: 'CrossContact RX' }, summer: { brand: 'Michelin', pattern: 'Primacy 4' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' } } }
+          }
+        },
+        'Golf': {
+          years: {
+            '2020-2025 (Mk8)': { sizes: ['205/55R16', '225/45R17', '225/40R18'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' }, winter: { brand: 'Hankook', pattern: 'Winter i*cept evo3' } } }
+          }
+        }
+      }
+    },
     'Hyundai': {
       models: {
         'Grandeur': {
@@ -71,6 +102,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     },
+    'Ford': {
+      models: {
+        'Explorer': {
+          years: {
+            '2020-2025': { sizes: ['255/65R18', '255/55R20', '275/45R21'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy SUV' }, summer: { brand: 'Continental', pattern: 'PremiumContact 6' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' } } }
+          }
+        }
+      }
+    },
+    'Chevrolet': {
+      models: {
+        'Traverse': {
+          years: {
+            '2018-2025': { sizes: ['255/65R18', '255/55R20'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy SUV' }, summer: { brand: 'Continental', pattern: 'PremiumContact 6' }, allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' }, winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' } } }
+          }
+        }
+      }
+    },
+    'Honda': {
+      models: {
+        'CR-V': {
+          years: {
+            '2023-2025': { sizes: ['235/65R17', '235/60R18', '235/55R19'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy SUV' }, summer: { brand: 'Continental', pattern: 'PremiumContact 6' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' } } }
+          }
+        }
+      }
+    },
+    'Nissan': {
+      models: {
+        'Rogue': {
+          years: {
+            '2021-2025': { sizes: ['235/65R17', '235/60R18', '235/55R19'], recs: { allSeason: { brand: 'Continental', pattern: 'CrossContact RX' }, summer: { brand: 'Michelin', pattern: 'Primacy 4' }, allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' }, winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' } } }
+          }
+        }
+      }
+    },
     'Tesla': {
       models: {
         'Model Y': {
@@ -81,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Model 3': {
           years: {
             '2024-2025 (Highland)': { sizes: ['235/45R18', '235/40R19'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy All Season (EV)' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Hankook', pattern: 'iON flexclimate' }, winter: { brand: 'Hankook', pattern: 'iON i*cept' } } },
-            '2017-2023': { sizes: ['235/45R18', '235/40R19', '235/35R20'], recs: { allSeason: { brand: 'Michelin', pattern: 'Pilot Sport All Season 4' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 4S' }, allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' }, winter: { brand: 'Pirelli', pattern: 'Winter Sottozero 3' } } }
+            '2017-2023': { sizes: ['235/45R18', '235/40R19', '235/35R20'], recs: { allSeason: { brand: 'Michelin', pattern: 'Pilot Sport All Season 4' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' }, winter: { brand: 'Hankook', pattern: 'Winter i*cept evo3' } } }
           }
         }
       }
@@ -91,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '5 Series': {
           years: {
             '2024-2025 (G60)': { sizes: ['245/45R19', '245/40R20'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } },
-            '2017-2023 (G30)': { sizes: ['225/55R17', '245/45R18'], recs: { allSeason: { brand: 'Pirelli', pattern: 'Cinturato P7 All Season' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Continental', pattern: 'AllSeasonContact' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } }
+            '2017-2023 (G30)': { sizes: ['225/55R17', '245/45R18'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Continental', pattern: 'ExtremeContact DWS06 Plus' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } }
           }
         }
       }
@@ -100,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
       models: {
         'E-Class': {
           years: {
-            '2024-2025 (W214)': { sizes: ['225/55R18', '245/45R19'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Continental', pattern: 'SportContact 7' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } },
+            '2024-2025 (W214)': { sizes: ['225/55R18', '245/45R19'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Continental', pattern: 'PremiumContact 6' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } },
             '2016-2023 (W213)': { sizes: ['245/45R18', '245/40R19'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Continental', pattern: 'MaxContact MC6' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } }
           }
         }
