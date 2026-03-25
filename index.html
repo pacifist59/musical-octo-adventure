@@ -23,33 +23,37 @@
 
     <section class="selection-section">
       <div class="select-group">
-        <label for="brand-select">제조사 선택</label>
+        <label for="brand-select">제조사</label>
         <select id="brand-select" class="main-select">
-          <option value="" disabled selected>제조사를 고르세요</option>
-          <!-- Brands will be populated via JS -->
+          <option value="" disabled selected>제조사 선택</option>
         </select>
       </div>
 
       <div class="select-group">
-        <label for="model-select">차종 선택</label>
+        <label for="model-select">차종</label>
         <select id="model-select" class="main-select" disabled>
-          <option value="" disabled selected>차종을 고르세요</option>
-          <!-- Models will be populated via JS -->
+          <option value="" disabled selected>차종 선택</option>
         </select>
       </div>
 
       <div class="select-group">
-        <label for="size-select">규격 선택</label>
+        <label for="year-select">연식</label>
+        <select id="year-select" class="main-select" disabled>
+          <option value="" disabled selected>연도 선택</option>
+        </select>
+      </div>
+
+      <div class="select-group">
+        <label for="size-select">규격</label>
         <select id="size-select" class="main-select" disabled>
-          <option value="" disabled selected>규격을 고르세요</option>
-          <!-- Sizes will be populated via JS -->
+          <option value="" disabled selected>규격 선택</option>
         </select>
       </div>
     </section>
 
     <main id="recommendations-container" class="recommendations-container">
       <div class="empty-state">
-        <p>제조사와 차종을 선택하면 추천 타이어가 나타납니다.</p>
+        <p>차량 정보를 선택하면 최적의 타이어 4종을 가로로 추천해 드립니다.</p>
       </div>
     </main>
 
@@ -57,6 +61,6 @@
       <p>© 2026 Tire Finder - Premium Tire Recommendation</p>
     </footer>
   </div>
-  <script defer type="text/javascript" src="/main.js?v=1.0.2"></script>
+  <script defer type="text/javascript" src="/main.js?v=1.0.3"></script>
 </body>
 </html>
