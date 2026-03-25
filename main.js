@@ -14,9 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     winter: { label: 'Winter', color: '#6366f1' }
   };
 
-  // Official Tire Model Images (Updated with verified manufacturer URLs)
+  // Official Tire Model Images
   const tireImages = {
-    // Michelin
     'Michelin Primacy 4': 'https://dgaddcosprod.blob.core.windows.net/michelin-gb/tyre-visuals/michelin-primacy-4-1.png',
     'Michelin Pilot Sport 4S': 'https://vcdn.michelin.co.kr/product/pilot-sport-4-s/tire-pilot-sport-4-s-1.png',
     'Michelin Pilot Sport 5': 'https://dgaddcosprod.blob.core.windows.net/michelin-gcl/tyre-visuals/michelin-pilot-sport-5.png',
@@ -28,8 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'Michelin Latitude Sport 3': 'https://vcdn.michelin.co.kr/product/latitude-sport-3/tire-latitude-sport-3-1.png',
     'Michelin X-Ice Snow': 'https://vcdn.michelin.co.kr/product/x-ice-snow/tire-x-ice-snow-1.png',
     'Michelin Primacy SUV': 'https://vcdn.michelin.co.kr/product/primacy-suv/tire-primacy-suv-1.png',
-
-    // Continental
     'Continental ProContact RX': 'https://www.continentaltire.com/sites/default/files/styles/product_image_large/public/product-images/ProContact_RX_Front.png',
     'Continental ExtremeContact DWS06 Plus': 'https://www.continentaltire.com/sites/default/files/styles/product_image_large/public/product-images/ExtremeContact_DWS06_Plus_Front.png',
     'Continental MaxContact MC6': 'https://blobs.continental-tires.com/www8/servlet/blob/86364/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/maxcontact-mc6-product-image-data.png',
@@ -38,8 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'Continental AllSeasonContact': 'https://blobs.continental-tires.com/www8/servlet/blob/115422/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/allseasoncontact-product-image-data.png',
     'Continental PremiumContact 6': 'https://www.continental-tires.com/content/dam/continental-tires/tires/passenger-cars/premiumcontact-6/premiumcontact-6-product-image.png',
     'Continental SportContact 7': 'https://blobs.continental-tires.com/www8/servlet/blob/5054122/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/sportcontact-7-product-image-data.png',
-
-    // Hankook
     'Hankook Kinergy EX': 'https://www.hankooktire.com/content/dam/hankooktire/global/tire/kinergy/ex-h308/kinergy-ex-h308-main.png',
     'Hankook Ventus S1 evo3': 'https://www.hankooktire.com/content/dam/hankooktire/global/tires/ventus/s1-evo3-k127/ventus-s1-evo3-k127-01.png',
     'Hankook Kinergy 4S2': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/kinergy-4s2-h750/kinergy-4s2-h750-side.png',
@@ -47,25 +42,59 @@ document.addEventListener('DOMContentLoaded', () => {
     'Hankook iON flexclimate': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/ion-flexclimate-ih01/ion-flexclimate-ih01-side.png',
     'Hankook iON i*cept': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/ion-icept-iw01/ion-icept-iw01-side.png',
     'Hankook Dynapro HP2': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/dynapro-hp2-ra33/dynapro-hp2-ra33-side.png',
-
-    // Kumho
     'Kumho Majesty 9 SOLUS TA91': 'https://www.kumhotireusa.com/content/dam/kumho/us/tires/majesty-9-solus-ta91/majesty-9-solus-ta91.png',
     'Kumho Ecsta PS71': 'https://www.kumhotire.com/upload/product/201905/PS71_list.png',
     'Kumho Wintercraft Wi61': 'https://www.kumhotire.com/upload/product/201905/Wi61_list.png',
-
-    // Bridgestone
     'Bridgestone Alenza 001': 'https://www.bridgestone.com/content/dam/consumer/bst/na/en/tires/alenza/alenza-001/alenza-001-tire-image.png',
     'Bridgestone Turanza T005': 'https://www.bridgestone.co.uk/content/dam/bridgestone/consumer/common/tires/turanza/t005/turanza-t005-product-image.png',
     'Bridgestone Blizzak DM-V3': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/blizzak-dm-v3/product-main.png',
     'Bridgestone Blizzak LM005': 'https://www.bridgestone.co.uk/content/dam/bridgestone/consumer/common/tires/blizzak/lm005/blizzak-lm005-product-image.png',
-
-    // Pirelli
     'Pirelli P Zero (PZ4)': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/p-zero/_/v1/image',
     'Pirelli Winter Sottozero 3': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/winter-sottozero-3/_/v1/image',
     'Pirelli Scorpion Verde': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/scorpion-verde/_/v1/image',
     'Pirelli Cinturato P7 All Season': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/cinturato-p7-all-season/_/v1/image',
-
     'Default': 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=400'
+  };
+
+  // Official Tire Product Links
+  const tireLinks = {
+    'Michelin Primacy 4': 'https://www.michelin.co.kr/auto/tyres/michelin-primacy-4',
+    'Michelin Pilot Sport 4S': 'https://www.michelin.co.kr/auto/tyres/michelin-pilot-sport-4-s',
+    'Michelin Pilot Sport 5': 'https://www.michelin.co.kr/auto/tyres/michelin-pilot-sport-5',
+    'Michelin CrossClimate 2': 'https://www.michelin.co.kr/auto/tyres/michelin-crossclimate-2',
+    'Michelin Pilot Alpin 5': 'https://www.michelin.co.kr/auto/tyres/michelin-pilot-alpin-5',
+    'Michelin Pilot Sport All Season 4': 'https://www.michelin.co.kr/auto/tyres/michelin-pilot-sport-all-season-4',
+    'Michelin Primacy All Season (EV)': 'https://www.michelin.co.kr/auto/tyres/michelin-primacy-all-season',
+    'Michelin Pilot Sport EV': 'https://www.michelin.co.kr/auto/tyres/michelin-pilot-sport-ev',
+    'Michelin Latitude Sport 3': 'https://www.michelin.co.kr/auto/tyres/michelin-latitude-sport-3',
+    'Michelin X-Ice Snow': 'https://www.michelin.co.kr/auto/tyres/michelin-x-ice-snow',
+    'Michelin Primacy SUV': 'https://www.michelin.co.kr/auto/tyres/michelin-primacy-suv',
+    'Continental ProContact RX': 'https://www.continentaltire.com/products/procontact-rx',
+    'Continental ExtremeContact DWS06 Plus': 'https://www.continentaltire.com/products/extremecontact-dws06-plus',
+    'Continental MaxContact MC6': 'https://www.continental-tires.com/kr/ko/b2c/car/tyres/maxcontact-mc6.html',
+    'Continental WinterContact TS 870': 'https://www.continental-tires.com/kr/ko/b2c/car/tyres/wintercontact-ts-870.html',
+    'Continental EcoContact 6': 'https://www.continental-tires.com/kr/ko/b2c/car/tyres/ecocontact-6.html',
+    'Continental AllSeasonContact': 'https://www.continental-tires.com/kr/ko/b2c/car/tyres/allseasoncontact.html',
+    'Continental PremiumContact 6': 'https://www.continental-tires.com/kr/ko/b2c/car/tyres/premiumcontact-6.html',
+    'Continental SportContact 7': 'https://www.continental-tires.com/kr/ko/b2c/car/tyres/sportcontact-7.html',
+    'Hankook Kinergy EX': 'https://www.hankooktire.com/kr/ko/tire/kinergy/ex-h308.html',
+    'Hankook Ventus S1 evo3': 'https://www.hankooktire.com/kr/ko/tire/ventus/s1-evo3-k127.html',
+    'Hankook Kinergy 4S2': 'https://www.hankooktire.com/kr/ko/tire/kinergy/4s2-h750.html',
+    'Hankook Winter i*cept evo3': 'https://www.hankooktire.com/kr/ko/tire/winter-icept/evo3-w330.html',
+    'Hankook iON flexclimate': 'https://www.hankooktire.com/kr/ko/tire/ion/flexclimate-ih01.html',
+    'Hankook iON i*cept': 'https://www.hankooktire.com/kr/ko/tire/ion/icept-iw01.html',
+    'Hankook Dynapro HP2': 'https://www.hankooktire.com/kr/ko/tire/dynapro/hp2-ra33.html',
+    'Kumho Majesty 9 SOLUS TA91': 'https://www.kumhotire.com/kr/ko/tire/view.do?productSeq=2533',
+    'Kumho Ecsta PS71': 'https://www.kumhotire.com/kr/ko/tire/view.do?productSeq=2521',
+    'Kumho Wintercraft Wi61': 'https://www.kumhotire.com/kr/ko/tire/view.do?productSeq=2545',
+    'Bridgestone Alenza 001': 'https://www.bridgestone.co.kr/ko/tire/alenza-001',
+    'Bridgestone Turanza T005': 'https://www.bridgestone.co.kr/ko/tire/turanza-t005',
+    'Bridgestone Blizzak DM-V3': 'https://www.bridgestone.co.kr/ko/tire/blizzak-dm-v3',
+    'Bridgestone Blizzak LM005': 'https://www.bridgestone.co.kr/ko/tire/blizzak-lm005',
+    'Pirelli P Zero (PZ4)': 'https://www.pirelli.com/tyres/ko-kr/car/catalogue/product/p-zero-pz4',
+    'Pirelli Winter Sottozero 3': 'https://www.pirelli.com/tyres/ko-kr/car/catalogue/product/winter-sottozero-3',
+    'Pirelli Scorpion Verde': 'https://www.pirelli.com/tyres/ko-kr/car/catalogue/product/scorpion-verde',
+    'Pirelli Cinturato P7 All Season': 'https://www.pirelli.com/tyres/ko-kr/car/catalogue/product/cinturato-p7-all-season'
   };
 
   const vehicleData = {
@@ -363,6 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const fullName = `${tire.brand} ${tire.pattern}`;
       const imgUrl = tireImages[fullName] || tireImages['Default'];
+      const productUrl = tireLinks[fullName] || `https://www.google.com/search?q=${encodeURIComponent(fullName)}`;
 
       const card = document.createElement('div');
       card.className = 'tire-card';
@@ -373,11 +403,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="tire-image-wrapper">
           <img src="${imgUrl}" alt="${fullName}" class="tire-image" onerror="this.src='${tireImages['Default']}'">
         </div>
-        <div class="tire-info">
+        <div class="tire-info" style="margin-bottom: 1.5rem;">
           <div class="tire-brand">${tire.brand}</div>
           <div class="tire-pattern">${tire.pattern}</div>
-          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Size: ${size}</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">규격: ${size}</div>
         </div>
+        <a href="${productUrl}" target="_blank" class="view-product-btn">제품 상세 정보 보기</a>
       `;
       
       recommendationsContainer.appendChild(card);
