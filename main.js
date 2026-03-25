@@ -37,13 +37,72 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const vehicleData = {
+    'Toyota': {
+      models: ['Corolla', 'Camry', 'RAV4', 'Prius', 'Highlander', 'Tacoma', 'Sienna', 'Crown', 'Supra', 'Land Cruiser', 'bZ4X', 'Venza', 'GR86'],
+      sizes: {
+        'Corolla': ['195/65R15', '205/55R16', '225/45R17'],
+        'Camry': ['215/55R17', '235/45R18', '235/40R19'],
+        'RAV4': ['225/65R17', '225/60R18', '235/55R19'],
+        'Prius': ['195/65R15', '195/50R19'],
+        'Highlander': ['235/65R18', '235/55R20'],
+        'Crown': ['225/55R19', '225/45R21'],
+        'bZ4X': ['235/60R18', '235/50R20']
+      },
+      recommendations: {
+        'Corolla': {
+          allSeason: { brand: 'Michelin', pattern: 'Primacy 4' },
+          summer: { brand: 'Hankook', pattern: 'Ventus S1 evo3' },
+          allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
+          winter: { brand: 'Kumho', pattern: 'Wintercraft Wi61' }
+        },
+        'Camry': {
+          allSeason: { brand: 'Bridgestone', pattern: 'Turanza T005' },
+          summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' },
+          allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' },
+          winter: { brand: 'Michelin', pattern: 'X-Ice Snow' }
+        },
+        'RAV4': {
+          allSeason: { brand: 'Michelin', pattern: 'Primacy SUV' },
+          summer: { brand: 'Continental', pattern: 'PremiumContact 6' },
+          allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' },
+          winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' }
+        }
+      }
+    },
+    'Volkswagen': {
+      models: ['Golf', 'Jetta', 'Tiguan', 'Passat', 'ID.4', 'Atlas', 'Polo', 'T-Roc', 'Arteon', 'Touareg', 'Taos'],
+      sizes: {
+        'Golf': ['205/55R16', '225/45R17', '225/40R18'],
+        'Jetta': ['205/60R16', '205/55R17', '225/45R18'],
+        'Tiguan': ['215/65R17', '235/55R18', '235/50R19', '255/40R20'],
+        'ID.4': ['235/55R19', '235/50R20', '255/45R20']
+      },
+      recommendations: {
+        'Golf': {
+          allSeason: { brand: 'Continental', pattern: 'AllSeasonContact' },
+          summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' },
+          allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' },
+          winter: { brand: 'Continental', pattern: 'WinterContact TS 870' }
+        },
+        'ID.4': {
+          allSeason: { brand: 'Michelin', pattern: 'Primacy All Season (EV)' },
+          summer: { brand: 'Continental', pattern: 'EcoContact 6' },
+          allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
+          winter: { brand: 'Hankook', pattern: 'iON i*cept' }
+        }
+      }
+    },
     'Hyundai': {
-      models: ['Grandeur', 'Santa Fe', 'Avante', 'Ioniq 5'],
+      models: ['Grandeur', 'Santa Fe', 'Avante', 'Ioniq 5', 'Ioniq 6', 'Sonata', 'Kona', 'Tucson', 'Palisade', 'Venue', 'Casper'],
       sizes: {
         'Grandeur': ['225/55R17', '245/45R18', '245/40R19'],
         'Santa Fe': ['235/60R18', '235/55R19', '255/45R20'],
         'Avante': ['195/65R15', '205/55R16', '225/45R17'],
-        'Ioniq 5': ['235/55R19', '255/45R20']
+        'Ioniq 5': ['235/55R19', '255/45R20'],
+        'Ioniq 6': ['225/55R18', '245/40R20'],
+        'Sonata': ['215/55R17', '235/45R18', '245/40R19'],
+        'Tucson': ['235/65R17', '235/60R18', '235/55R19'],
+        'Palisade': ['245/60R18', '245/50R20']
       },
       recommendations: {
         'Grandeur': {
@@ -69,32 +128,118 @@ document.addEventListener('DOMContentLoaded', () => {
           summer: { brand: 'Continental', pattern: 'EcoContact 6' },
           allWeather: { brand: 'Hankook', pattern: 'iON flexclimate' },
           winter: { brand: 'Hankook', pattern: 'iON i*cept' }
+        },
+        'Palisade': {
+          allSeason: { brand: 'Michelin', pattern: 'Primacy SUV' },
+          summer: { brand: 'Bridgestone', pattern: 'Alenza 001' },
+          allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' },
+          winter: { brand: 'Michelin', pattern: 'X-Ice Snow SUV' }
         }
       }
     },
-    'Tesla': {
-      models: ['Model 3', 'Model Y'],
+    'Kia': {
+      models: ['K3', 'K5', 'K8', 'K9', 'Sportage', 'Sorento', 'Carnival', 'EV6', 'EV9', 'Telluride', 'Niro', 'Seltos', 'Ray', 'Morning'],
       sizes: {
-        'Model 3': ['235/45R18', '235/40R19', '235/35R20'],
-        'Model Y': ['255/45R19', '255/40R20', '255/35R21']
+        'K5': ['215/55R17', '235/45R18', '245/40R19'],
+        'Sportage': ['235/65R17', '235/60R18', '235/55R19'],
+        'Sorento': ['235/60R18', '235/55R19', '255/45R20'],
+        'EV6': ['235/55R19', '255/45R20', '255/40R21'],
+        'Carnival': ['235/65R17', '235/60R18', '235/55R19']
       },
       recommendations: {
-        'Model 3': {
-          allSeason: { brand: 'Michelin', pattern: 'Pilot Sport All Season 4' },
-          summer: { brand: 'Michelin', pattern: 'Pilot Sport 4S' },
-          allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' },
-          winter: { brand: 'Pirelli', pattern: 'Winter Sottozero 3' }
-        },
-        'Model Y': {
-          allSeason: { brand: 'Continental', pattern: 'ProContact RX' },
-          summer: { brand: 'Michelin', pattern: 'Pilot Sport EV' },
+        'K5': {
+          allSeason: { brand: 'Kumho', pattern: 'Majesty 9 SOLUS TA91' },
+          summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' },
           allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
           winter: { brand: 'Hankook', pattern: 'Winter i*cept evo3' }
+        },
+        'EV6': {
+          allSeason: { brand: 'Continental', pattern: 'PremiumContact 6' },
+          summer: { brand: 'Michelin', pattern: 'Pilot Sport EV' },
+          allWeather: { brand: 'Hankook', pattern: 'iON flexclimate' },
+          winter: { brand: 'Hankook', pattern: 'iON i*cept' }
+        },
+        'Sorento': {
+          allSeason: { brand: 'Hankook', pattern: 'Dynapro HP2' },
+          summer: { brand: 'Michelin', pattern: 'Latitude Sport 3' },
+          allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
+          winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' }
+        }
+      }
+    },
+    'Ford': {
+      models: ['F-150', 'Explorer', 'Mustang', 'Mach-E', 'Ranger', 'Bronco', 'Escape', 'Edge', 'Maverick', 'Expedition'],
+      sizes: {
+        'F-150': ['265/70R17', '275/65R18', '275/60R20'],
+        'Explorer': ['255/65R18', '255/55R20', '275/45R21'],
+        'Mustang': ['235/50R18', '255/40R19', '275/40R19'],
+        'Mach-E': ['225/60R18', '225/55R19', '245/45R20']
+      },
+      recommendations: {
+        'Mustang': {
+          allSeason: { brand: 'Michelin', pattern: 'Pilot Sport All Season 4' },
+          summer: { brand: 'Michelin', pattern: 'Pilot Sport 4S' },
+          allWeather: { brand: 'Continental', pattern: 'ExtremeContact DWS06 Plus' },
+          winter: { brand: 'Pirelli', pattern: 'Winter Sottozero 3' }
+        },
+        'Explorer': {
+          allSeason: { brand: 'Michelin', pattern: 'Primacy SUV' },
+          summer: { brand: 'Pirelli', pattern: 'Scorpion Verde' },
+          allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
+          winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' }
+        }
+      }
+    },
+    'Chevrolet': {
+      models: ['Silverado', 'Equinox', 'Malibu', 'Tahoe', 'Suburban', 'Trailblazer', 'Traverse', 'Colorado', 'Corvette', 'Bolt EV'],
+      sizes: {
+        'Malibu': ['205/65R16', '225/55R17', '245/45R18', '245/40R19'],
+        'Equinox': ['225/65R17', '225/60R18', '235/50R19'],
+        'Traverse': ['255/65R18', '255/55R20']
+      },
+      recommendations: {
+        'Malibu': {
+          allSeason: { brand: 'Hankook', pattern: 'Kinergy EX' },
+          summer: { brand: 'Michelin', pattern: 'Primacy 4' },
+          allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
+          winter: { brand: 'Kumho', pattern: 'Wintercraft Wi61' }
+        }
+      }
+    },
+    'Honda': {
+      models: ['Civic', 'Accord', 'CR-V', 'HR-V', 'Pilot', 'Odyssey', 'Passport', 'Ridgeline'],
+      sizes: {
+        'Civic': ['215/55R16', '215/50R17', '235/40R18'],
+        'Accord': ['225/50R17', '235/45R18', '235/40R19'],
+        'CR-V': ['235/65R17', '235/60R18', '235/55R19']
+      },
+      recommendations: {
+        'Accord': {
+          allSeason: { brand: 'Michelin', pattern: 'Primacy 4' },
+          summer: { brand: 'Hankook', pattern: 'Ventus S1 evo3' },
+          allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
+          winter: { brand: 'Bridgestone', pattern: 'Blizzak LM005' }
+        }
+      }
+    },
+    'Nissan': {
+      models: ['Sentra', 'Altima', 'Rogue', 'Pathfinder', 'Frontier', 'Leaf', 'Ariya', 'Z', 'Maxima'],
+      sizes: {
+        'Altima': ['215/60R16', '215/55R17', '235/45R19'],
+        'Rogue': ['225/65R17', '235/60R18', '235/55R19'],
+        'Leaf': ['205/55R16', '215/50R17']
+      },
+      recommendations: {
+        'Rogue': {
+          allSeason: { brand: 'Continental', pattern: 'CrossContact RX' },
+          summer: { brand: 'Michelin', pattern: 'Primacy 4' },
+          allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' },
+          winter: { brand: 'Michelin', pattern: 'X-Ice Snow' }
         }
       }
     },
     'BMW': {
-      models: ['3 Series', '5 Series', 'X5'],
+      models: ['1 Series', '2 Series', '3 Series', '4 Series', '5 Series', '7 Series', '8 Series', 'X1', 'X3', 'X5', 'X7', 'i4', 'iX', 'i7'],
       sizes: {
         '3 Series': ['225/50R17', '225/45R18', '225/40R19'],
         '5 Series': ['225/55R17', '245/45R18', '245/40R19', '245/35R20'],
@@ -118,6 +263,51 @@ document.addEventListener('DOMContentLoaded', () => {
           summer: { brand: 'Pirelli', pattern: 'P Zero (PZ4)' },
           allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
           winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' }
+        }
+      }
+    },
+    'Mercedes-Benz': {
+      models: ['A-Class', 'C-Class', 'E-Class', 'S-Class', 'GLA', 'GLC', 'GLE', 'GLS', 'EQB', 'EQE', 'EQS', 'G-Class'],
+      sizes: {
+        'C-Class': ['225/50R17', '225/45R18', '225/40R19'],
+        'E-Class': ['225/55R17', '245/45R18', '245/40R19', '275/35R19'],
+        'GLC': ['235/60R18', '235/55R19', '255/45R20']
+      },
+      recommendations: {
+        'E-Class': {
+          allSeason: { brand: 'Michelin', pattern: 'Primacy 4' },
+          summer: { brand: 'Continental', pattern: 'SportContact 7' },
+          allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
+          winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' }
+        },
+        'GLC': {
+          allSeason: { brand: 'Continental', pattern: 'CrossContact RX' },
+          summer: { brand: 'Michelin', pattern: 'Latitude Sport 3' },
+          allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
+          winter: { brand: 'Bridgestone', pattern: 'Blizzak DM-V3' }
+        }
+      }
+    },
+    'Tesla': {
+      models: ['Model 3', 'Model Y', 'Model S', 'Model X', 'Cybertruck'],
+      sizes: {
+        'Model 3': ['235/45R18', '235/40R19', '235/35R20'],
+        'Model Y': ['255/45R19', '255/40R20', '255/35R21'],
+        'Model S': ['245/45R19', '245/35R21'],
+        'Model X': ['265/50R19', '265/45R20', '265/35R22']
+      },
+      recommendations: {
+        'Model 3': {
+          allSeason: { brand: 'Michelin', pattern: 'Pilot Sport All Season 4' },
+          summer: { brand: 'Michelin', pattern: 'Pilot Sport 4S' },
+          allWeather: { brand: 'Hankook', pattern: 'Kinergy 4S2' },
+          winter: { brand: 'Pirelli', pattern: 'Winter Sottozero 3' }
+        },
+        'Model Y': {
+          allSeason: { brand: 'Continental', pattern: 'ProContact RX' },
+          summer: { brand: 'Michelin', pattern: 'Pilot Sport EV' },
+          allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' },
+          winter: { brand: 'Hankook', pattern: 'Winter i*cept evo3' }
         }
       }
     }
@@ -215,17 +405,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Theme Toggle
-  const currentTheme = localStorage.getItem('theme');
-  if (currentTheme === 'dark') {
-    body.classList.add('dark-mode');
-    themeToggle.innerHTML = '🌙';
+  // Theme Initialization (System Default + Persistence)
+  const savedTheme = localStorage.getItem('theme');
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  const applyTheme = (isDark) => {
+    if (isDark) {
+      body.classList.add('dark-mode');
+      themeToggle.innerHTML = '<span class="moon-icon">🌙</span>';
+    } else {
+      body.classList.remove('dark-mode');
+      themeToggle.innerHTML = '<span class="sun-icon">☀️</span>';
+    }
+  };
+
+  // Initial Theme Check
+  if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+    applyTheme(true);
+  } else {
+    applyTheme(false);
   }
 
   themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    const isDark = body.classList.contains('dark-mode');
-    themeToggle.innerHTML = isDark ? '🌙' : '☀️';
+    const isDark = !body.classList.contains('dark-mode');
+    applyTheme(isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
 });
