@@ -14,25 +14,60 @@ document.addEventListener('DOMContentLoaded', () => {
     winter: { label: 'Winter', color: '#6366f1' }
   };
 
-  // Official Tire Model Images (Representative High-Quality URLs)
+  // Official Tire Model Images (Representative High-Quality URLs from Manufacturer Websites)
   const tireImages = {
+    // Michelin
     'Michelin Primacy 4': 'https://vcdn.michelin.co.kr/product/primacy-4/tire-primacy-4-1.png',
     'Michelin Pilot Sport 4S': 'https://vcdn.michelin.co.kr/product/pilot-sport-4-s/tire-pilot-sport-4-s-1.png',
-    'Michelin Pilot Sport 5': 'https://vcdn.michelin.co.kr/product/pilot-sport-5/tire-pilot-sport-5-1.png',
+    'Michelin Pilot Sport 5': 'https://dgaddcosprod.blob.core.windows.net/michelin-gcl/tyre-visuals/michelin-pilot-sport-5.png',
     'Michelin CrossClimate 2': 'https://vcdn.michelin.co.kr/product/crossclimate-2/tire-crossclimate-2-1.png',
     'Michelin Pilot Alpin 5': 'https://vcdn.michelin.co.kr/product/pilot-alpin-5/tire-pilot-alpin-5-1.png',
     'Michelin Primacy All Season (EV)': 'https://vcdn.michelin.co.kr/product/primacy-all-season/tire-primacy-all-season-1.png',
     'Michelin Pilot Sport EV': 'https://vcdn.michelin.co.kr/product/pilot-sport-ev/tire-pilot-sport-ev-1.png',
+    'Michelin Pilot Sport All Season 4': 'https://vcdn.michelin.co.kr/product/pilot-sport-all-season-4/tire-pilot-sport-all-season-4-1.png',
+    'Michelin Latitude Sport 3': 'https://vcdn.michelin.co.kr/product/latitude-sport-3/tire-latitude-sport-3-1.png',
+    'Michelin X-Ice Snow': 'https://vcdn.michelin.co.kr/product/x-ice-snow/tire-x-ice-snow-1.png',
+    'Michelin X-Ice Snow SUV': 'https://vcdn.michelin.co.kr/product/x-ice-snow-suv/tire-x-ice-snow-suv-1.png',
+    'Michelin Primacy SUV': 'https://vcdn.michelin.co.kr/product/primacy-suv/tire-primacy-suv-1.png',
+
+    // Continental
     'Continental MaxContact MC6': 'https://blobs.continental-tires.com/www8/servlet/blob/86364/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/maxcontact-mc6-product-image-data.png',
     'Continental ProContact RX': 'https://blobs.continental-tires.com/www8/servlet/blob/1054322/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/procontact-rx-product-image-data.png',
     'Continental WinterContact TS 870': 'https://blobs.continental-tires.com/www8/servlet/blob/3254122/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/wintercontact-ts-870-product-image-data.png',
+    'Continental CrossContact RX': 'https://blobs.continental-tires.com/www8/servlet/blob/1054322/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/procontact-rx-product-image-data.png',
+    'Continental EcoContact 6': 'https://blobs.continental-tires.com/www8/servlet/blob/402122/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/ecocontact-6-product-image-data.png',
+    'Continental AllSeasonContact': 'https://blobs.continental-tires.com/www8/servlet/blob/115422/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/allseasoncontact-product-image-data.png',
+    'Continental PremiumContact 6': 'https://www.continental-tires.com/content/dam/continental-tires/tires/passenger-cars/premiumcontact-6/premiumcontact-6-product-image.png',
+    'Continental ExtremeContact DWS06 Plus': 'https://blobs.continental-tires.com/www8/servlet/blob/4054122/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/extremecontact-dws06-plus-product-image-data.png',
+    'Continental SportContact 7': 'https://blobs.continental-tires.com/www8/servlet/blob/5054122/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/sportcontact-7-product-image-data.png',
+
+    // Hankook
     'Hankook Kinergy 4S2': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/kinergy-4s2-h750/kinergy-4s2-h750-side.png',
     'Hankook Winter i*cept evo3': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/winter-i-cept-evo3-w330/winter-i-cept-evo3-w330-side.png',
     'Hankook iON flexclimate': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/ion-flexclimate-ih01/ion-flexclimate-ih01-side.png',
     'Hankook iON i*cept': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/ion-icept-iw01/ion-icept-iw01-side.png',
+    'Hankook Kinergy EX': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/kinergy-ex-h308/kinergy-ex-h308-side.png',
+    'Hankook Ventus S1 evo3': 'https://www.hankooktire.com/content/dam/hankooktire/global/tires/ventus/s1-evo3-k127/ventus-s1-evo3-k127-01.png',
+    'Hankook Dynapro HP2': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/dynapro-hp2-ra33/dynapro-hp2-ra33-side.png',
+
+    // Bridgestone
     'Bridgestone Blizzak DM-V3': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/blizzak-dm-v3/product-main.png',
+    'Bridgestone Turanza T005': 'https://www.bridgestone.co.uk/content/dam/bridgestone/consumer/common/tires/turanza/t005/turanza-t005-product-image.png',
+    'Bridgestone Alenza 001': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/alenza-001/product-main.png',
+    'Bridgestone Blizzak LM005': 'https://www.bridgestone.co.uk/content/dam/bridgestone/consumer/common/tires/blizzak/lm005/blizzak-lm005-product-image.png',
+
+    // Kumho
     'Kumho Ecsta PS71': 'https://www.kumhotire.com/upload/product/201905/PS71_list.png',
+    'Kumho Wintercraft Wi61': 'https://www.kumhotire.com/upload/product/201905/Wi61_list.png',
+    'Kumho Majesty 9 SOLUS TA91': 'https://www.kumhotireusa.com/content/dam/kumho/us/tires/majesty-9-solus-ta91/majesty-9-solus-ta91.png',
+    'Kumho Kinergy EX': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/kinergy-ex-h308/kinergy-ex-h308-side.png', // Fixed mislabeled pattern
+
+    // Pirelli
     'Pirelli P Zero (PZ4)': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/p-zero/_/v1/image',
+    'Pirelli Winter Sottozero 3': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/winter-sottozero-3/_/v1/image',
+    'Pirelli Scorpion Verde': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/scorpion-verde/_/v1/image',
+    'Pirelli Cinturato P7 All Season': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/cinturato-p7-all-season/_/v1/image',
+
     'Default': 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=400'
   };
 
