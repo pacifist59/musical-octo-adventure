@@ -52,6 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
     'Continental ProContact RX': 'https://www.continentaltire.com/products/procontact-rx'
   };
 
+  const brandLinks = {
+    'Michelin': 'https://www.michelin.co.kr',
+    'Continental': 'https://www.continental-tires.com/kr/ko.html',
+    'Hankook': 'https://www.hankooktire.com/kr/ko.html',
+    'Kumho': 'https://www.kumhotire.com/kr/ko/index.do',
+    'Bridgestone': 'https://www.bridgestone.co.kr',
+    'Pirelli': 'https://www.pirelli.com/tyres/ko-kr/car/homepage',
+    'Goodyear': 'https://www.goodyear.co.kr'
+  };
+
   const vehicleData = {
     'Toyota': {
       models: {
@@ -214,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const meta = categoryMeta[catId];
       const fullName = `${tire.brand} ${tire.pattern}`;
       const imgUrl = tireImages[fullName] || tireImages['Default'];
-      const productUrl = tireLinks[fullName] || `https://www.google.com/search?q=${encodeURIComponent(fullName)}+tire`;
+      const productUrl = tireLinks[fullName] || brandLinks[tire.brand] || `https://www.google.com/search?q=${encodeURIComponent(fullName)}+tire`;
 
       const card = document.createElement('div');
       card.className = 'tire-card';
