@@ -16,26 +16,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const tireImages = {
     'Michelin Primacy 4': 'https://vcdn.michelin.co.kr/product/primacy-4/tire-primacy-4-1.png',
-    'Michelin Pilot Sport 5': 'https://dgaddcosprod.blob.core.windows.net/michelin-gcl/tyre-visuals/michelin-pilot-sport-5.png',
+    'Michelin Pilot Sport 5': 'https://vcdn.michelin.co.kr/product/pilot-sport-5/tire-pilot-sport-5-1.png',
+    'Michelin Pilot Sport 4S': 'https://vcdn.michelin.co.kr/product/pilot-sport-4-s/tire-pilot-sport-4-s-1.png',
     'Michelin CrossClimate 2': 'https://vcdn.michelin.co.kr/product/crossclimate-2/tire-crossclimate-2-1.png',
     'Michelin Pilot Alpin 5': 'https://vcdn.michelin.co.kr/product/pilot-alpin-5/tire-pilot-alpin-5-1.png',
-    'Michelin Primacy All Season (EV)': 'https://vcdn.michelin.co.kr/product/primacy-all-season/tire-primacy-all-season-1.png',
-    'Michelin Pilot Sport EV': 'https://vcdn.michelin.co.kr/product/pilot-sport-ev/tire-pilot-sport-ev-1.png',
     'Michelin Primacy SUV': 'https://vcdn.michelin.co.kr/product/primacy-suv/tire-primacy-suv-1.png',
-    'Continental ProContact RX': 'https://www.continentaltire.com/sites/default/files/styles/product_image_large/public/product-images/ProContact_RX_Front.png',
+    'Michelin Pilot Sport EV': 'https://vcdn.michelin.co.kr/product/pilot-sport-ev/tire-pilot-sport-ev-1.png',
+    'Michelin Latitude Sport 3': 'https://vcdn.michelin.co.kr/product/latitude-sport-3/tire-latitude-sport-3-1.png',
+    'Michelin X-Ice Snow': 'https://vcdn.michelin.co.kr/product/x-ice-snow/tire-x-ice-snow-1.png',
+    'Michelin X-Ice Snow SUV': 'https://vcdn.michelin.co.kr/product/x-ice-snow-suv/tire-x-ice-snow-suv-1.png',
+    'Michelin Primacy All Season (EV)': 'https://vcdn.michelin.co.kr/product/primacy-all-season/tire-primacy-all-season-1.png',
+    'Michelin Pilot Sport All Season 4': 'https://vcdn.michelin.co.kr/product/pilot-sport-all-season-4/tire-pilot-sport-all-season-4-1.png',
+    'Continental ProContact RX': 'https://blobs.continental-tires.com/www8/servlet/blob/1054322/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/procontact-rx-product-image-data.png',
     'Continental ExtremeContact DWS06 Plus': 'https://www.continentaltire.com/sites/default/files/styles/product_image_large/public/product-images/ExtremeContact_DWS06_Plus_Front.png',
     'Continental PremiumContact 6': 'https://www.continental-tires.com/content/dam/continental-tires/tires/passenger-cars/premiumcontact-6/premiumcontact-6-product-image.png',
-    'Hankook Kinergy EX': 'https://www.hankooktire.com/content/dam/hankooktire/global/tire/kinergy/ex-h308/kinergy-ex-h308-main.png',
+    'Continental SportContact 7': 'https://blobs.continental-tires.com/www8/servlet/blob/5054122/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/sportcontact-7-product-image-data.png',
+    'Continental EcoContact 6': 'https://blobs.continental-tires.com/www8/servlet/blob/1054322/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/ecocontact-6-product-image-data.png',
+    'Continental MaxContact MC6': 'https://blobs.continental-tires.com/www8/servlet/blob/1054322/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/maxcontact-mc6-product-image-data.png',
+    'Continental CrossContact RX': 'https://blobs.continental-tires.com/www8/servlet/blob/1054322/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/crosscontact-rx-product-image-data.png',
+    'Continental AllSeasonContact': 'https://blobs.continental-tires.com/www8/servlet/blob/1054322/7b6f6e5b4a5f4e6e8e5f5e5f5e5f5e5f/allseasoncontact-product-image-data.png',
     'Hankook Ventus S1 evo3': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/ventus-s1-evo3-k127/ventus-s1-evo3-k127-side.png',
     'Hankook Kinergy 4S2': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/kinergy-4s2-h750/kinergy-4s2-h750-side.png',
     'Hankook Winter i*cept evo3': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/winter-i-cept-evo3-w330/winter-i-cept-evo3-w330-side.png',
     'Hankook iON flexclimate': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/ion-flexclimate-ih01/ion-flexclimate-ih01-side.png',
     'Hankook iON i*cept': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/ion-icept-iw01/ion-icept-iw01-side.png',
+    'Hankook Kinergy EX': 'https://www.hankooktire.com/content/dam/hankooktire/kr/tires/kinergy-ex-h308/kinergy-ex-h308-side.png',
     'Kumho Majesty 9 SOLUS TA91': 'https://www.kumhotire.com/upload/product/201905/TA91_list.png',
-    'Bridgestone Alenza 001': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/alenza-001/product-main.png',
+    'Kumho Ecsta PS71': 'https://www.kumhotire.com/upload/product/201905/PS71_list.png',
+    'Kumho Wintercraft Wi61': 'https://www.kumhotire.com/upload/product/201905/Wi61_list.png',
     'Bridgestone Turanza T005': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/turanza-t005/product-main.png',
+    'Bridgestone Alenza 001': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/alenza-001/product-main.png',
+    'Bridgestone Blizzak DM-V3': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/blizzak-dm-v3/product-main.png',
+    'Bridgestone Blizzak LM005': 'https://www.bridgestone.co.kr/content/dam/bridgestone/ototires/asia/kr/product/tire-list/blizzak-lm005/product-main.png',
     'Pirelli P Zero (PZ4)': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/p-zero/_/v1/image',
-    'Default': 'https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=400'
+    'Pirelli Cinturato P7 All Season': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/cinturato-p7-all-season/_/v1/image',
+    'Pirelli Scorpion Verde': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/scorpion-verde/_/v1/image',
+    'Pirelli Winter Sottozero 3': 'https://www.pirelli.com/tyres/en-ww/car/find-your-tyres/products-sheet/winter-sottozero-3/_/v1/image',
+    'Goodyear Wrangler Territory RT': 'https://www.goodyear.com/content/dam/goodyear/en-us/tire-images/wrangler-territory-rt/wrangler-territory-rt-side.png',
+    'Default': 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?auto=format&fit=crop&q=80&w=400'
   };
 
   const tireLinks = {
@@ -95,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '5 Series': {
           years: {
             '2024-2025 (G60)': { sizes: ['245/45R19', '245/40R20', '245/35R21'], recs: { allSeason: { brand: 'Michelin', pattern: 'Primacy 4' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } },
-            '2017-2023 (G30)': { sizes: ['225/55R17', '245/45R18', '245/40R19'], recs: { allSeason: { brand: 'Pirelli', pattern: 'Cinturato P7 All Season' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Continental', pattern: 'AllSeasonContact' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } }
+            '2017-2023 (G30)': { sizes: ['225/55R17', '245/45R18', '245/40R19'], recs: { allSeason: { brand: 'Pirelli', pattern: 'Cinturato P7 All Season' }, summer: { brand: 'Michelin', pattern: 'Pilot Sport 5' }, allWeather: { brand: 'Michelin', pattern: 'CrossClimate 2' }, winter: { brand: 'Michelin', pattern: 'Pilot Alpin 5' } } }
           }
         }
       }
@@ -160,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     recommendationsContainer.innerHTML = '';
     ['allSeason', 'summer', 'allWeather', 'winter'].forEach((catId, index) => {
       const tire = recs[catId];
+      if (!tire) return;
       const meta = categoryMeta[catId];
       const fullName = `${tire.brand} ${tire.pattern}`;
       const imgUrl = tireImages[fullName] || tireImages['Default'];
